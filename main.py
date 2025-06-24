@@ -16,12 +16,17 @@ async def read_root():
 
 @app.get('/quote')
 async def read_quote():
+    api_url = 'https://api.realinspire.live/v1/quotes/random'
+    response = requests.get(api_url)
 
-    return {"Quote": "Here is your quote"}
-
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q":q}
+    if response.status_code == requests.codes.ok:
+        print(response.text)
+        parsedResponse = json.loads(response.text)
+        quote = parsedResponse[0]['content']
+        author = parsedResponse[0]['author']
+        return parsedResponse
+    else:
+        print("Error:", response.status_code, response.text)
 
 @app.post('/quote')
 async def generatequote():
