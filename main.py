@@ -40,4 +40,7 @@ async def generatequote():
         ]
     }
     response = requests.post(url, headers=headers, data=json.dumps(data))
-    return response.json()
+    response_data = response.json()
+    
+    return response_data['choices'][0]['message']['content']
+    # return response_data['id']
