@@ -9,6 +9,7 @@ app = FastAPI()
 load_dotenv()
 
 api_key = os.getenv("API_KEY")
+api_url = os.getenv("API_URL")
 
 @app.get('/')
 async def read_root():
@@ -16,7 +17,6 @@ async def read_root():
 
 @app.get('/quote')
 async def read_quote():
-    api_url = 'https://api.realinspire.live/v1/quotes/random'
     response = requests.get(api_url)
 
     if response.status_code == requests.codes.ok:
@@ -40,7 +40,7 @@ async def generatequote():
         "messages":[
             {
             "role":"user",
-            "content":"Give me motivational quote to uplift my mood and respond with the quote and the meaning only"
+            "content":"Give me motivational quote to uplift my mood"
             }
         ]
     }
